@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Board from './Board';
+import Timer from './Timer';
 import './App.css';
 
 function App() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [winner, setWinner] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="game">
+      <div className="status">
+        {winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O')}
+      </div>
+      <Timer isActive={!winner} />
+      <Board xIsNext={xIsNext} setXIsNext={setXIsNext} setWinner={setWinner} />
+      <button className="reset" onClick={() => window.location.reload()}>Reset Game</button>
     </div>
   );
 }
