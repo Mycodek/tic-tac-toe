@@ -3,57 +3,104 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Makes sure the game is vertically centered in the viewport */
+  height: 100vh;
+  background-color: #f0f2f5;
+  /* Soft background color for less strain on the eyes */
+  font-family: 'Arial', sans-serif;
+  /* Consistent, readable font */
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px); /* Increased cell size for better visibility */
-  grid-gap: 10px; /* Larger gap for a clearer separation of cells */
-  justify-content: center; /* Centers the grid horizontally */
-  margin-bottom: 20px;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
 }
 
 .square {
-  width: 100px; /* Matching the grid column size */
+  width: 100px;
   height: 100px;
-  background: #fff;
-  border: 2px solid #000; /* Adds a border to each square */
+  background-color: #ffffff;
+  border: none;
+  /* Removing borders for a cleaner look */
+  color: #333;
+  /* Dark grey color for the text, offering better contrast */
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 32px;
+  /* Larger text for better visibility */
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s; /* Smooth transition for background and opacity changes */
+  transition: all 0.3s ease;
+  /* Smooth transitions for all animated properties */
+  border-radius: 8px;
+  /* Rounded corners for a modern look */
 }
 
 .square:hover {
-  background-color: #f4f4f4; /* Light grey background on hover for better interaction feedback */
+  background-color: #e8e8e8;
+  /* Slightly darker on hover for tactile feedback */
+  transform: translateY(-3px);
+  /* Subtle lift effect on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Shadow effect for the lift */
 }
 
 .square.faded {
-  opacity: 0.3;
-  cursor: not-allowed; /* Changes cursor to indicate the square is less interactive */
+  opacity: 0.5;
+  cursor: pointer;
+  background-color: #ccc;
+  /* Grey out faded squares */
 }
 
-.status, .clock {
-  margin-bottom: 10px;
-  font-size: 16px; /* Larger text for better readability */
-  font-weight: bold;
+.status {
+  margin-bottom: 20px;
+  font-size: 18px; /* Normal font size */
+  color: #2c3e50; /* Normal text color */
+  transition: transform 0.3s ease; /* Smooth transition for transformations */
+}
+
+.winner-announcement {
+  font-size: 48px; /* Larger font size for winner announcement */
+  color: #024d11; /* Change color to something more alerting */
+  font-weight: bold; /* Make it bold */
+  text-shadow: 0 0 10px rgba(72, 250, 44, 0.8); /* Soft white glow for emphasis */
+  transform: scale(1.1); /* Slightly larger scale for emphasis */
+  animation: pulse 1.5s infinite; /* Animation to grab attention */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.1); }
+}
+
+.clock {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #2c3e50;
+  /* Dark blue for a more professional, subtle look */
 }
 
 .reset {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 12px 24px;
+  font-size: 18px;
   cursor: pointer;
-  background-color: #4CAF50; /* Green background for visibility */
+  background-color: #3498db;
+  /* Vibrant blue for attraction */
   color: white;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s; /* Smooth transition for button hover effect */
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Consistent shadowing with other elements */
 }
 
 .reset:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: #2980b9;
+  /* A darker shade of blue on hover for visual feedback */
 }

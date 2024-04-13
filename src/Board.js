@@ -1,41 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function Board({ xIsNext, setXIsNext, setWinner }) {
+function Board({ xIsNext, setXIsNext, winner, setWinner }) {
     const [board, setBoard] = useState(Array(9).fill({ symbol: null, faded: false }));
     const [moveHistory, setMoveHistory] = useState([]);
 
-    useEffect(() => {
-        // Handle fading logic here
-        fadeOldestMove();
-    }, [xIsNext]); // This effect runs every time it's a new player's turn
-
-    const fadeOldestMove = () => {
-        const currentSymbol = xIsNext ? 'X' : 'O';
-        const moves = moveHistory.filter(move => move.symbol === currentSymbol);
-        if (moves.length >= 3) {
-            // Fade the oldest symbol
-            const boardCopy = [...board];
-            const oldestMove = moves[0];
-            boardCopy[oldestMove.position] = { ...boardCopy[oldestMove.position], faded: true };
-            setBoard(boardCopy);
-        }
-    };
-
     const handleClick = (i) => {
+        if (winner) return;
+
         const currentSymbol = xIsNext ? 'X' : 'O';
         const boardCopy = [...board];
         const cell = boardCopy[i];
 
-        // Allow placing or reactivating the symbol only if the cell is empty or faded
+        // Allow placing or reactivating the symbol
         if (!cell.symbol || cell.faded) {
-            // Reactivate or place a new symbol
-            boardCopy[i] = { symbol: currentSymbol, faded: false };
-            const filteredHistory = moveHistory.filter(move => move.symbol === currentSymbol);
-            if (filteredHistory.length >= 3) {
-                // Remove the oldest move if there are already 3 active symbols
-                const oldestMove = filteredHistory[0];
+
+            // opposite symbol moves history
+            const oppositeFilteredHistory = moveHistory.filter(move => move.symbol !== currentSymbol);
+            if (oppositeFilteredHistory.length >= 3) {
+                // Fad the oldest move if there are already 3 symbols of opposite kind
+                const oldestMove = oppositeFilteredHistory[0];
                 boardCopy[oldestMove.position] = { ...boardCopy[oldestMove.position], faded: true };
             }
+
+            // remove same symbol faded one
+            const filteredHistory = moveHistory.filter(move => move.symbol === currentSymbol);
+            for (let j = 0; j < filteredHistory.length; j++) {
+                if (boardCopy[filteredHistory[j].position].faded) {
+                    boardCopy[filteredHistory[j].position] = { symbol: null, faded: false };
+                }
+            }
+
+            // place a new symbol at this index
+            boardCopy[i] = { symbol: currentSymbol, faded: false };
             setMoveHistory([...moveHistory.filter(move => move.position !== i), { symbol: currentSymbol, position: i }]);
             setBoard(boardCopy);
             setXIsNext(!xIsNext);

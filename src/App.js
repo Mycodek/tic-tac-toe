@@ -9,11 +9,11 @@ function App() {
 
   return (
     <div className="game">
-      <div className="status">
+      <div className={`status ${winner ? 'winner-announcement' : ''}`}>
         {winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O')}
       </div>
       <Timer isActive={!winner} />
-      <Board xIsNext={xIsNext} setXIsNext={setXIsNext} setWinner={setWinner} />
+      <Board xIsNext={xIsNext} setXIsNext={setXIsNext} winner={winner} setWinner={setWinner} />
       <button className="reset" onClick={() => window.location.reload()}>Reset Game</button>
     </div>
   );
