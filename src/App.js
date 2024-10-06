@@ -3,6 +3,7 @@ import Board from './Board';
 import Timer from './Timer';
 import './App.css';
 
+
 function App() {
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
